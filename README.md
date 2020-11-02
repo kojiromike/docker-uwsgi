@@ -16,6 +16,7 @@ docker build -t my_wsgi_app --build-arg PKG=my_wsgi_app <<-DOCKERFILE
 FROM kojiromike/uwsgi
 ENV UWSGI_MODULE=my_wsgi_app.module:function \
     UWSGI_HTTP=:8080
+DOCKERFILE
 ```
 
 
