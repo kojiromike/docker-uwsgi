@@ -1,0 +1,34 @@
+<html>
+<head><title>Uwsgi is working</title></head>
+<body>
+    <h1>Uwsgi is working!</h1>
+    <h2>What's next</h2>
+    <p>
+    Run your own Python application!
+    You can create a new image based on this one,
+    or you can dynamically update this container and run your application directly.
+    </p>
+
+    <h3>Make your own image</h3>
+    <p>In the test image, we install werkzeug as a test application.</p>
+    <pre><code>
+    $ docker build --tag werkzeug_testapp - &lt;&lt; DOCKERFILE
+    FROM uwsgi:latest
+    RUN pip install werkzeug
+    ENV UWSGI_MODULE=werkzeug.testapp:test_app
+    DOCKERFILE
+    $ docker run --detach --name werkzeug_testapp -p 8080:8080 werkzeug_testapp
+    </code></pre>
+    <p>Making your own image is better if you want a manageable, static image that starts immediately with your application.</p>
+
+    <h3>Dynamically update this container</h3>
+    <p>Install an application directly in this container, then update the uwsgi.ini to point to it.
+    (This is not the best way, but it can help in a pinch.)
+    For example:</p>
+    <pre><code>
+    $ docker exec {container_name} pip install werkzeug
+    $ docker exec {container_name} sed -i 's/hello/werkzeug.testapp:test_app/' uwsgi.ini
+    </code></pre>
+    <p>Touching the uwsgi.ini file will cause uwsgi to reload. Wait a few seconds (or watch the log) then refresh this page.</p>
+    <p>Dynamic reloading is better if you are tweaking settings and trying things out.</p>
+</body></html>
