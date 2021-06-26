@@ -7,6 +7,7 @@
 import argparse
 import os
 
+UWSGI_ENV_DOCS = "https://uwsgi-docs.readthedocs.io/en/latest/Configuration.html#environment-variables"
 
 def _parse_args():
     """Parse command line arguments and share the right ones with uwsgi."""
@@ -18,12 +19,11 @@ def main():
     """Determine if we should start uwsgi or do some other instructions."""
     args, unknown_args  = _parse_args()
     if unknown_args:
+        print(f"Received arguments {unknown_args}")
         os.execvp(unknown_args[0], unknown_args)
 
-    # Why hack this to provide command-line arguments to uwsgi,
-    # when you can configure uwsgi every which way from the environment.
-
-    # Don't like the environment? Use a config file.
+    print("Starting uwsgi.")
+    print(f"Configure uwsgi by setting environment variables or provide a config file: {UWSGI_ENV_DOCS}")
     os.execlp("uwsgi", "uwsgi")
 
 
