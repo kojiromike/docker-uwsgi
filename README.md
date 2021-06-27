@@ -26,6 +26,19 @@ ENV UWSGI_MODULE=my_wsgi_app.module:function
 DOCKERFILE
 ```
 
+#### Werkzeug Example
+
+[Werkzeug](https://palletsprojects.com/p/werkzeug/) ships with a test application we can use to show how easy it is to add your own.
+
+```
+$ docker build -t werkzeug_testapp <<-DOCKERFILE
+FROM kojiromike/uwsgi
+RUN pip install werkzeug
+ENV UWSGI_MODULE=werkzeug.testapp:test_app
+DOCKERFILE
+$ docker run --name werkzeug_testapp -p 8080:8080 werkzeug_testapp
+```
+
 
 ## Motivation
 

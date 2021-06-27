@@ -6,7 +6,7 @@
 
 build_image() {
     echo 'Building the uwsgi image'
-    docker build -t uwsgi .
+    docker build --build-arg PYTHON_VERSION="$1" -t uwsgi .
 }
 
 build_test_image() {
@@ -45,10 +45,14 @@ test_image() {
 }
 
 main() {
-    build_image
-    build_test_image
-    run_test_image
-    test_image
+    local -a python_versions=( 3.9 )
+    for python_version in "${python_versions[@]}"; do
+        build_image "$python_version"
+        build_test_image
+        run_test_image
+        test_image
+        docker tag uwsgi:latest "uwsgi:python$python_version"
+    done
 }
 
 main "$@"

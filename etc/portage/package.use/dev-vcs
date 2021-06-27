@@ -1,0 +1,1 @@
+dev-vcs/git -cgi -curl -cvs -doc -emacs -gnome-keyring -highlight -iconv -mediawiki -mediawiki-experimental -nls -pcre -pcre-jit -perforce -perl -subversion -test -tk -webdav -xinetd
