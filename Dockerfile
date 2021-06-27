@@ -1,11 +1,15 @@
 ##
+# The specific stage3 image tag to start from.
+ARG STAGE3_VERSION=amd64-hardened-nomultilib
+
+##
 # The `portage` image provides the package repository.
 FROM gentoo/portage as portage
 
 
 ##
 # The `system` image is minimal.
-FROM gentoo/stage3 as system
+FROM gentoo/stage3:${STAGE3_VERSION} as system
 LABEL author="Michael A. Smith <michael@smith-li.com>"
 LABEL license="Apache License 2.0"
 WORKDIR /srv
